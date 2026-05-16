@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSD Studio | Premium Production Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
+        /* PREMIUM COLOR PALETTE */
         :root { 
-            --gold: #D4AF37; --white: #FFFFFF; --orange: #FF6600; 
-            --blue: #003399; --yellow: #FFD700; --dark: #050505; 
+            --gold: #D4AF37; 
+            --white: #FFFFFF; 
+            --black: #050505;
+            --charcoal: #121212;
+            --glass: rgba(18, 18, 18, 0.85);
+            --gold-glow: rgba(212, 175, 55, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
         
-        /* 100% WORKING GOKU BACKGROUND */
+        /* GOKU BACKGROUND WITH DARK OVERLAY */
         body { 
-            background-color: var(--dark);
-            background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.85)), url('goku.jpg');
+            background-color: var(--black);
+            background-image: linear-gradient(rgba(5, 5, 5, 0.88), rgba(5, 5, 5, 0.88)), url('goku.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -24,139 +29,201 @@
             overflow-x: hidden; 
         }
 
-        /* LOADER & CURSOR */
+        /* CUSTOM PRE-LOADER */
         #loader { 
-            position: fixed; width: 100%; height: 100vh; background: var(--dark); 
+            position: fixed; width: 100%; height: 100vh; background: var(--black); 
             z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        .teleport { font-size: 3rem; color: var(--yellow); font-weight: 900; animation: blink 0.3s infinite alternate; }
-        @keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
-        
-        #customCursor { 
-            position: fixed; width: 18px; height: 18px; background: var(--yellow); 
-            border-radius: 50%; pointer-events: none; z-index: 110000; 
-            box-shadow: 0 0 15px var(--orange), 0 0 30px var(--yellow); 
-            transform: translate(-50%, -50%); transition: transform 0.05s ease-out;
+        .csd-logo-anim {
+            font-size: 3.5rem; color: var(--gold); font-weight: 900; letter-spacing: 8px;
+            border: 2px solid var(--gold); padding: 20px 40px; border-radius: 5px;
+            animation: pulse 1.5s infinite alternate; text-transform: uppercase;
         }
-
-        #waterCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+        @keyframes pulse { from { box-shadow: 0 0 10px var(--gold-glow); text-shadow: 0 0 10px var(--gold-glow); } to { box-shadow: 0 0 30px var(--gold), inset 0 0 20px var(--gold-glow); text-shadow: 0 0 20px var(--gold); } }
 
         /* NAVIGATION */
         nav { 
-            position: fixed; width: 100%; padding: 12px 5%; 
+            position: fixed; width: 100%; padding: 15px 5%; 
             display: flex; justify-content: space-between; align-items: center; 
-            background: rgba(0, 51, 153, 0.9); z-index: 90000; border-bottom: 3px solid var(--gold); 
+            background: var(--glass); backdrop-filter: blur(10px); z-index: 90000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
         }
-        .logo-box { background: var(--orange); padding: 8px 20px; border: 2px solid var(--yellow); border-radius: 5px; position: relative; z-index: 90001; }
-        .logo-box span { font-weight: 900; color: #fff; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
-        .nav-links a { color: white; text-decoration: none; margin-left: 15px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+        .logo-box span { font-weight: 900; color: var(--gold); font-size: 1.5rem; letter-spacing: 3px; text-transform: uppercase; }
+        .nav-links a { color: var(--white); text-decoration: none; margin-left: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
 
         /* SECTIONS */
-        section { min-height: 100vh; padding: 100px 8%; position: relative; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .section-title { font-size: 2.2rem; color: var(--gold); text-align: center; margin: 0 auto 50px; text-transform: uppercase; border-bottom: 3px solid var(--gold); display: table; padding-bottom: 10px; }
+        section { min-height: 100vh; padding: 120px 8%; position: relative; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .section-title { font-size: 2.2rem; color: var(--gold); text-align: center; margin: 0 auto 50px; text-transform: uppercase; font-weight: 300; letter-spacing: 4px; }
+        .section-title strong { font-weight: 900; }
 
+        /* HERO HEADER */
         header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; z-index: 500; }
-        .hero-logo { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; color: var(--orange); text-shadow: 0 0 25px var(--yellow); animation: stay 2s forwards; }
+        .hero-title { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; color: var(--white); letter-spacing: 5px; text-transform: uppercase; }
+        .hero-title span { color: var(--gold); }
+        .hero-subtitle { letter-spacing: 6px; color: #aaa; font-weight: 400; margin-top: 15px; font-size: 1rem; text-transform: uppercase; }
 
-        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .about-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; border-left: 5px solid var(--blue); border-top: 1px solid var(--orange); }
-
-        /* PORTFOLIO */
-        .portfolio-masonry { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; width: 100%; }
-        .work-item { border: 2px solid var(--gold); border-radius: 12px; overflow: hidden; background: #111; height: 250px; position: relative; }
+        /* EXPERTISE GRID */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+        .team-card { background: rgba(18, 18, 18, 0.6); padding: 40px 20px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; backdrop-filter: blur(5px); }
+        .team-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 10px 30px var(--gold-glow); }
+        
+        /* PORTFOLIO TABS */
+        .filter-btns { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn { background: rgba(0,0,0,0.5); color: var(--white); border: 1px solid var(--white); padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; }
+        .filter-btn.active, .filter-btn:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+        
+        .portfolio-masonry { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .work-item { border-radius: 8px; overflow: hidden; background: #000; height: 250px; position: relative; border: 1px solid rgba(212, 175, 55, 0.3); transition: 0.4s; }
+        .work-item:hover { border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); }
         .work-item iframe, .work-item img { width: 100%; height: 100%; border: none; object-fit: cover; }
-        .work-item img { pointer-events: none; }
 
-        /* PRICING */
-        .pricing-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(212, 175, 55, 0.3); padding: 40px; border-radius: 20px; text-align: center; transition: all 0.4s ease; }
-        .glass-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
-        .glass-card h3 { color: var(--gold); margin-bottom: 25px; font-size: 1.4rem; letter-spacing: 2px; }
-        .price-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .price-name { font-weight: 700; display: block; }
-        .price-val { color: var(--gold); font-weight: 900; font-size: 1.2rem; }
+        /* TESTIMONIALS */
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testi-card { background: rgba(18, 18, 18, 0.7); padding: 30px; border-radius: 10px; border-left: 3px solid var(--gold); position: relative; backdrop-filter: blur(5px); }
+        .testi-card p { font-style: italic; color: #ccc; font-size: 0.95rem; margin-bottom: 15px; line-height: 1.6; }
+        .testi-card h4 { color: var(--gold); text-transform: uppercase; font-size: 0.9rem; }
+        .quote-mark { position: absolute; top: 10px; right: 20px; font-size: 3rem; color: rgba(212, 175, 55, 0.1); font-family: serif; }
 
         /* WORKFLOW */
-        .flow-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
-        .flow-step { background: rgba(0, 51, 153, 0.8); backdrop-filter: blur(5px); width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 3px solid var(--orange); text-align: center; font-size: 0.75rem; }
+        .flow-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .flow-step { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(5px); width: 130px; height: 130px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 2px solid var(--gold); text-align: center; transition: 0.4s; }
+        .flow-step:hover { box-shadow: 0 0 25px var(--gold-glow); transform: translateY(-10px); }
+        .flow-step h4 { color: var(--gold); font-size: 1.5rem; margin-bottom: 5px; }
+        .flow-step p { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--white); }
 
-        /* BOOKING */
-        .booking-box { max-width: 500px; margin: auto; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 2px solid var(--gold); }
-        .tracker-container { text-align: center; margin-bottom: 30px; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 15px; border: 1px solid var(--gold); }
-        .booked-tag { background: #ff0000; color: white; padding: 5px 12px; border-radius: 50px; font-weight: 900; font-size: 0.8rem; margin: 5px; display: inline-block; box-shadow: 0 0 10px #ff0000; }
+        /* PRICING & BOOKING */
+        .glass-card, .booking-box, .tracker-container { background: rgba(18, 18, 18, 0.8); border: 1px solid rgba(212, 175, 55, 0.2); padding: 40px; border-radius: 15px; backdrop-filter: blur(10px); }
+        .pricing-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .price-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
+        .price-val { color: var(--gold); font-weight: 900; }
         
-        input, select, button { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: #fff; border-radius: 8px; font-size: 1rem; }
+        .tracker-container { text-align: center; margin-bottom: 40px; border-color: rgba(255,0,0,0.3); }
+        .booked-tag { background: #8b0000; color: white; padding: 8px 15px; border-radius: 5px; font-weight: 700; font-size: 0.85rem; margin: 5px; display: inline-block; border: 1px solid red; box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+
+        input, select, button { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 5px; font-size: 1rem; outline: none; }
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
-        .btn-gold { background: var(--gold); color: #000; font-weight: 900; border: none; cursor: none !important; transition: 0.3s; text-transform: uppercase; }
+        input:focus, select:focus { border-color: var(--gold); }
+        .btn-gold { background: var(--gold); color: var(--black); font-weight: 900; border: none; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-gold:hover { box-shadow: 0 0 20px var(--gold-glow); transform: scale(1.02); }
+
+        /* CHATBOT & WHATSAPP */
+        .wp-btn { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; z-index: 85000; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        
+        .chat-btn { position: fixed; bottom: 30px; left: 30px; background: var(--gold); color: var(--black); width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 25px; z-index: 85000; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); font-weight: bold; }
+        .chat-box { position: fixed; bottom: 100px; left: 30px; width: 300px; background: var(--charcoal); border: 1px solid var(--gold); border-radius: 10px; z-index: 86000; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .chat-header { background: var(--gold); color: var(--black); padding: 15px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { padding: 15px; height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem; }
+        .msg { max-width: 80%; padding: 10px; border-radius: 8px; }
+        .msg.bot { background: rgba(255,255,255,0.1); align-self: flex-start; border-left: 2px solid var(--gold); }
+        .msg.user { background: rgba(212, 175, 55, 0.2); align-self: flex-end; color: var(--gold); border-right: 2px solid var(--gold); }
+        .chat-input { display: flex; border-top: 1px solid rgba(255,255,255,0.1); }
+        .chat-input input { margin: 0; border: none; border-radius: 0; background: var(--black); padding: 12px; }
+        .chat-input button { width: 60px; margin: 0; border-radius: 0; }
 
         /* ADMIN */
-        #adminBox { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 95000; padding: 50px; display: none; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #111; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .admin-btn { padding: 5px 10px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-right: 5px; }
-        .wp-btn { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; z-index: 85000; text-decoration: none; }
+        #adminBox { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(5,5,5,0.95); z-index: 95000; padding: 50px; display: none; overflow-y: auto; backdrop-filter: blur(10px); }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: rgba(18,18,18,0.9); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .del-btn { color:red; background:none; border:none; font-weight:bold; cursor:pointer; font-size: 1.1rem; padding: 5px; }
     </style>
 </head>
 <body>
 
-    <div id="loader"><div class="teleport">CSD STUDIO</div><p style="color:var(--orange); font-weight:900;">POWERING UP...</p></div>
-    <div id="customCursor"></div>
-    <canvas id="waterCanvas"></canvas>
-    <a href="https://wa.me/917872420455" class="wp-btn">💬</a>
+    <!-- PRELOADER -->
+    <div id="loader">
+        <div class="csd-logo-anim">CSD STUDIO</div>
+        <p style="color:var(--gold); margin-top: 20px; font-size: 0.8rem; letter-spacing: 3px;">PREMIUM PRODUCTION ELITE</p>
+    </div>
 
+    <!-- WHATSAPP & CHATBOT -->
+    <a href="https://wa.me/917872420455" class="wp-btn">💬</a>
+    
+    <div class="chat-btn" onclick="toggleChat()">🤖</div>
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">CSD Assistant <span style="cursor:pointer;" onclick="toggleChat()">✖</span></div>
+        <div class="chat-body" id="chatBody">
+            <div class="msg bot">Hello! Welcome to CSD Studio. Aapko kis service ki details chahiye? (e.g. Type 'Reels', 'Wedding', 'Price')</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMsg()">
+            <button class="btn-gold" onclick="sendMsg()">➤</button>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
     <nav>
         <div class="logo-box"><span>CSD STUDIO</span></div>
         <div class="nav-links">
             <a href="#home">Home</a>
+            <a href="#about">Expertise</a>
             <a href="#work">Portfolio</a>
             <a href="#pricing">Pricing</a>
             <a href="#contact">Booking</a>
-            <button onclick="adminLogin()" style="background:var(--gold); border:none; padding:5px 15px; font-weight:bold; color:#000;">ADMIN</button>
+            <button onclick="adminLogin()" style="background:var(--gold); border:none; padding:5px 15px; font-weight:bold; color:#000; margin-left:15px; border-radius:3px; cursor:pointer;">ADMIN</button>
         </div>
     </nav>
 
+    <!-- HERO -->
     <header id="home">
-        <div class="hero-logo">CSD STUDIO</div>
-        <p style="letter-spacing: 5px; color: var(--yellow); font-weight: bold; margin-top: 20px;">BY DHRUP ROUTH PRODUCTION</p>
+        <h1 class="hero-title">Visuals <span>Redefined</span></h1>
+        <p class="hero-subtitle">Cinematic Weddings | Motion Graphics | Premium Editing</p>
     </header>
 
+    <!-- EXPERTISE SECTION -->
     <section id="about">
-        <h2 class="section-title">The 4 Warriors</h2>
-        <div class="about-grid">
-            <div class="about-card"><h3>Creative Team</h3><p>Mera naam Dhrup Routh hai. Hum 4 logon ka group hain jo photography aur editing mein deal karte hain.</p></div>
-            <div class="about-card"><h3>Our Expertise</h3><p>Cinematic Weddings, Trending Reels aur VFX hamari core power hai.</p></div>
+        <h2 class="section-title">Core <strong>Expertise</strong></h2>
+        <p style="text-align: center; color: #ccc; max-width: 800px; margin: -20px auto 50px; font-size: 1rem; line-height: 1.8; letter-spacing: 0.5px;">
+            Ek premium visual sirf shoot nahi hota, use craft kiya jata hai. Main <strong style="color:var(--gold);">Dhrup Routh</strong>, CSD Studio ka sole creator, aapke vision ko ek high-end reality mein badalta hu. Concept aur shooting se lekar advanced motion graphics aur cinematic color grading tak—har project par mera signature touch hota hai. No compromises, just pure cinematic perfection.
+        </p>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <h3 style="color:var(--gold); font-size:2.2rem; margin-bottom:15px;">🎥</h3>
+                <h3 style="font-size: 1.3rem; letter-spacing: 1px; color:var(--white);">Cinematography</h3>
+                <p style="color: #aaa; margin-top: 12px; font-size: 0.9rem; font-weight: 500; text-transform: none; line-height: 1.5;">
+                    Capturing cinematic weddings and events with a highly professional, clean, and modern aesthetic.
+                </p>
+            </div>
+            <div class="team-card">
+                <h3 style="color:var(--gold); font-size:2.2rem; margin-bottom:15px;">✨</h3>
+                <h3 style="font-size: 1.3rem; letter-spacing: 1px; color:var(--white);">Advanced VFX</h3>
+                <p style="color: #aaa; margin-top: 12px; font-size: 0.9rem; font-weight: 500; text-transform: none; line-height: 1.5;">
+                    High-end motion graphics, seamless transitions, and premium 3D typography name casting sequences.
+                </p>
+            </div>
+            <div class="team-card">
+                <h3 style="color:var(--gold); font-size:2.2rem; margin-bottom:15px;">🎨</h3>
+                <h3 style="font-size: 1.3rem; letter-spacing: 1px; color:var(--white);">Color Grading</h3>
+                <p style="color: #aaa; margin-top: 12px; font-size: 0.9rem; font-weight: 500; text-transform: none; line-height: 1.5;">
+                    Transforming standard footage into moody, cinematic, and visually striking masterpieces.
+                </p>
+            </div>
+            <div class="team-card">
+                <h3 style="color:var(--gold); font-size:2.2rem; margin-bottom:15px;">📱</h3>
+                <h3 style="font-size: 1.3rem; letter-spacing: 1px; color:var(--white);">Viral Reels</h3>
+                <p style="color: #aaa; margin-top: 12px; font-size: 0.9rem; font-weight: 500; text-transform: none; line-height: 1.5;">
+                    Fast-paced trending edits, precise sound sync, and dynamic styling for maximum social media reach.
+                </p>
+            </div>
         </div>
     </section>
 
+    <!-- PORTFOLIO SECTION -->
     <section id="work">
-        <h2 class="section-title">Ultra Portfolio</h2>
+        <h2 class="section-title">Elite <strong>Portfolio</strong></h2>
+        <div class="filter-btns">
+            <button class="filter-btn active" onclick="filterWork('All')">All Work</button>
+            <button class="filter-btn" onclick="filterWork('Wedding')">Cinematic Weddings</button>
+            <button class="filter-btn" onclick="filterWork('Reels')">Trending Reels</button>
+            <button class="filter-btn" onclick="filterWork('VFX')">High-End VFX</button>
+        </div>
         <div class="portfolio-masonry" id="publicGallery"></div>
     </section>
 
-    <section id="pricing">
-        <h2 class="section-title">Service Packages</h2>
-        <div class="pricing-container">
-            <div class="glass-card">
-                <h3>REELS</h3>
-                <div class="price-item"><span class="price-name">Basic Reel</span><span class="price-val">₹500</span></div>
-                <div class="price-item"><span class="price-name">Intermediate</span><span class="price-val">₹500 - ₹800</span></div>
-                <div class="price-item"><span class="price-name">Advanced VFX</span><span class="price-val">₹800 - ₹1,500+</span></div>
-            </div>
-            <div class="glass-card">
-                <h3>CINEMATOGRAPHY</h3>
-                <div class="price-item"><span class="price-name">Cinematic Video</span><span class="price-val">₹5,000</span></div>
-                <div class="price-item"><span class="price-name">Traditional Video</span><span class="price-val">₹2,500</span></div>
-            </div>
-            <div class="glass-card">
-                <h3>MONTHLY</h3>
-                <div class="price-item"><span class="price-name">Standard (15 Reels)</span><span class="price-val">₹10k - ₹15k</span></div>
-                <div class="price-item"><span class="price-name">Elite (30 Reels)</span><span class="price-val">₹15k - ₹25k</span></div>
-            </div>
-        </div>
-    </section>
-
+    <!-- WORKFLOW SECTION -->
     <section id="workflow">
-        <h2 class="section-title">Workflow Steps</h2>
+        <h2 class="section-title">Our <strong>Workflow</strong></h2>
         <div class="flow-container">
             <div class="flow-step"><h4>01</h4><p>Booking</p></div>
             <div class="flow-step"><h4>02</h4><p>Shoot</p></div>
@@ -166,15 +233,40 @@
         </div>
     </section>
 
+    <!-- PRICING SECTION -->
+    <section id="pricing">
+        <h2 class="section-title">Premium <strong>Packages</strong></h2>
+        <div class="pricing-container">
+            <div class="glass-card">
+                <h3 style="color:var(--gold); margin-bottom:20px;">REELS</h3>
+                <div class="price-item"><span>Basic Reel</span><span class="price-val">₹500</span></div>
+                <div class="price-item"><span>Intermediate</span><span class="price-val">₹500 - ₹800</span></div>
+                <div class="price-item"><span>Advanced VFX</span><span class="price-val">₹800 - ₹1,500+</span></div>
+            </div>
+            <div class="glass-card">
+                <h3 style="color:var(--gold); margin-bottom:20px;">CINEMATOGRAPHY</h3>
+                <div class="price-item"><span>Cinematic Video</span><span class="price-val">₹5,000</span></div>
+                <div class="price-item"><span>Traditional Video</span><span class="price-val">₹2,500</span></div>
+            </div>
+            <div class="glass-card">
+                <h3 style="color:var(--gold); margin-bottom:20px;">MONTHLY</h3>
+                <div class="price-item"><span>Standard (15 Reels)</span><span class="price-val">₹10k - ₹15k</span></div>
+                <div class="price-item"><span>Elite (30 Reels)</span><span class="price-val">₹15k - ₹25k</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING & LIVE TRACKER SECTION -->
     <section id="contact">
-        <h2 class="section-title">Live Booking Tracker</h2>
-        <div class="tracker-container">
-            <p style="color:var(--gold); margin-bottom:10px; font-weight:bold;">RESERVED DATES (BOOKED):</p>
+        <h2 class="section-title">Reserve <strong>Your Slot</strong></h2>
+        
+        <!-- LIVE TRACKER -->
+        <div class="tracker-container" style="max-width: 600px; margin: 0 auto 40px auto;">
+            <p style="color:#ff4c4c; margin-bottom:15px; font-weight:bold; letter-spacing: 2px;">RESERVED DATES (NOT AVAILABLE)</p>
             <div id="publicTracker"></div>
         </div>
-        
-        <h2 class="section-title" style="margin-top:50px;">Summon Slot</h2>
-        <div class="booking-box">
+
+        <div class="booking-box" style="max-width: 600px; margin: auto;">
             <input type="text" id="cName" placeholder="Client Name">
             <input type="tel" id="cPhone" placeholder="WhatsApp Number">
             <select id="cService">
@@ -188,180 +280,226 @@
                 <option value="Elite Monthly - ₹15000">Elite Monthly (₹15k-25k)</option>
             </select>
             <input type="date" id="cDate">
-            <button class="btn-gold" id="submitBtn" onclick="clientSubmit()">Request Slot</button>
+            <button class="btn-gold" id="submitBtn" onclick="clientSubmit()">Send Request</button>
         </div>
     </section>
 
+    <!-- ADMIN PANEL -->
     <div id="adminBox">
-        <h2 style="color:var(--gold)">Admin Control Panel</h2>
-        <button onclick="document.getElementById('adminBox').style.display='none'" style="background:red; color:white; padding:10px; border:none; margin-bottom:20px;">CLOSE</button>
-        
-        <div style="border:1px solid var(--orange); padding:20px; background:#111; margin-bottom:20px;">
-            <h3 style="color:var(--orange)">Security Settings</h3>
-            <input type="text" id="newPass" placeholder="Enter New Password">
-            <button class="btn-gold" onclick="changePassword()" style="width:auto; padding:5px 20px;">Update Password</button>
+        <h2 style="color:var(--gold); margin-bottom:20px;">Admin Control Center</h2>
+        <button onclick="document.getElementById('adminBox').style.display='none'" style="background:red; color:white; padding:10px 20px; border:none; margin-bottom:20px; cursor:pointer;">CLOSE ADMIN</button>
+
+        <!-- ADD PORTFOLIO -->
+        <div style="border:1px solid var(--gold); padding:20px; background:rgba(18,18,18,0.9); margin-bottom:30px; border-radius:10px;">
+            <h3 style="margin-bottom:15px; color: var(--white);">Upload to Portfolio</h3>
+            <div style="display:flex; gap:10px; margin-bottom:15px;">
+                <select id="workType" style="margin:0;"><option value="image">Image (Photo)</option><option value="video">Video</option></select>
+                <select id="workCategory" style="margin:0;">
+                    <option value="Wedding">Cinematic Weddings</option>
+                    <option value="Reels">Trending Reels</option>
+                    <option value="VFX">High-End VFX</option>
+                </select>
+            </div>
+            <input type="text" id="workLink" placeholder="Paste Google Drive Link OR Direct Image Link Here">
+            <button class="btn-gold" onclick="addWork()">UPLOAD MEDIA</button>
         </div>
 
-        <div style="border:1px solid var(--gold); padding:20px; background:#111; margin-bottom:30px;">
-            <h3>Update Portfolio</h3>
-            <select id="workType"><option value="image">Image (Photo)</option><option value="video">Video</option></select>
-            <input type="text" id="workLink" placeholder="Paste ANY Google Drive Link Here">
-            <button class="btn-gold" onclick="addWork()" style="width:auto; padding:5px 20px;">UPLOAD MEDIA</button>
-        </div>
+        <!-- MANAGE PORTFOLIO TABLE -->
+        <h3 style="color:var(--gold); margin-top:20px;">Manage Uploaded Photos/Videos</h3>
+        <table style="margin-bottom: 40px;">
+            <thead><tr><th style="color:var(--white);">Type</th><th style="color:var(--white);">Category</th><th style="color:var(--white);">Preview / Link</th><th style="color:var(--white);">Action</th></tr></thead>
+            <tbody id="adminGalleryBody"></tbody>
+        </table>
 
+        <!-- CLIENT BOOKINGS TABLE WITH APPROVAL -->
+        <h3 style="color:var(--gold);">Client Booking Requests</h3>
         <table>
-            <thead><tr><th>Client</th><th>Phone</th><th>Service</th><th>Date</th><th>Tracker</th><th>Bill</th><th>Del</th></tr></thead>
+            <thead><tr><th style="color:var(--white);">Client</th><th style="color:var(--white);">Phone</th><th style="color:var(--white);">Service</th><th style="color:var(--white);">Date</th><th style="color:var(--white);">Status (Tracker)</th><th style="color:var(--white);">Chat</th><th style="color:var(--white);">Del</th></tr></thead>
             <tbody id="adminTableBody"></tbody>
         </table>
     </div>
 
     <script>
-        window.onload = () => { setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 2000); };
-        
-        const cursor = document.getElementById('customCursor');
-        window.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+        // PRELOADER
+        window.onload = () => { 
+            setTimeout(() => { 
+                document.getElementById('loader').style.opacity = '0'; 
+                setTimeout(() => { document.getElementById('loader').style.visibility = 'hidden'; }, 500);
+            }, 2000); 
+        };
 
-        let db = JSON.parse(localStorage.getItem('csd_db_vidfix_v3')) || [];
-        let gallery = JSON.parse(localStorage.getItem('csd_gal_vidfix_v3')) || [];
-        let adminPass = localStorage.getItem('csd_pass_vidfix') || "1234";
+        // DATABASE
+        let db = JSON.parse(localStorage.getItem('csd_db_final_v6')) || [];
+        let gallery = JSON.parse(localStorage.getItem('csd_gal_final_v6')) || [];
+        let adminPass = localStorage.getItem('csd_pass_final_v6') || "@@@7872";
 
-        // --- NEW SECURE FETCH LOGIC ADDED HERE ---
+        // CHATBOT
+        function toggleChat() {
+            let box = document.getElementById('chatBox');
+            box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendMsg() {
+            let input = document.getElementById('chatInput');
+            let text = input.value.trim().toLowerCase();
+            if(!text) return;
+
+            let body = document.getElementById('chatBody');
+            body.innerHTML += `<div class="msg user">${input.value}</div>`;
+            input.value = '';
+
+            setTimeout(() => {
+                let reply = "Hum jaldi hi aapse connect karenge. Ya WhatsApp icon par click karke direct baat karein!";
+                if(text.includes('price') || text.includes('rate') || text.includes('charge')) reply = "Basic Reels ₹500 se start hain aur Cinematic Videos ₹5,000. 'Pricing' section check karein!";
+                else if(text.includes('wedding')) reply = "Hum Premium Cinematic Weddings shoot karte hain with 3D Name Casting! Booking section mein slot request karein.";
+                else if(text.includes('reels')) reply = "Trending reels aur VFX hamari specialty hai. Monthly package 10k se shuru hota hai (15 Reels).";
+                else if(text.includes('hi') || text.includes('hello')) reply = "Namaste! CSD Studio mein aapka swagat hai. Kahiye, kaise help karein?";
+                
+                body.innerHTML += `<div class="msg bot">${reply}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 800);
+        }
+
+        // BOOKING SUBMIT
         function clientSubmit() {
             const n = document.getElementById('cName').value, 
                   p = document.getElementById('cPhone').value, 
                   s = document.getElementById('cService').value, 
                   d = document.getElementById('cDate').value;
-                  
             if(!n || !p || !s || !d) return alert("Pura form bhariye!");
 
-            // Local Storage (For immediate Website UI update)
+            // Default approved is false so it doesn't show on tracker until admin allows
             db.push({ id: Date.now(), name: n, phone: p, service: s, date: d, approved: false });
-            localStorage.setItem('csd_db_vidfix_v3', JSON.stringify(db));
-
-            // DHRUP - TUMHARA UNIQUE SCRIPT URL YAHAN LAGA DIYA GAYA HAI
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxwL-nWwEk7VS8lqvgpsgn6Nvv7RsD0M--GoUm0uJjD5y47daRoAEiBPHO21amgFsqW/exec'; 
+            localStorage.setItem('csd_db_final_v6', JSON.stringify(db));
 
             document.getElementById('submitBtn').innerText = "Sending Data...";
 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxwL-nWwEk7VS8lqvgpsgn6Nvv7RsD0M--GoUm0uJjD5y47daRoAEiBPHO21amgFsqW/exec';
             let formData = new FormData();
             formData.append("name", n);
             formData.append("phone", p);
             formData.append("service", s);
             formData.append("date", d);
 
-            if (scriptURL !== 'TUMHARA_GOOGLE_SCRIPT_LINK_YAHAN_DALO') {
-                fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-                .then(response => {
-                    alert("Booking Done! Data Google Drive aur Email dono jagah bhej diya gaya hai.");
-                    location.reload();
-                })
-                .catch(error => {
-                    alert("Website par save ho gaya, par Drive connection check karein.");
-                    location.reload();
-                });
-            } else {
-                alert("Booking sirf local Website par save hui hai. Google Drive Script URL abhi add nahi kiya gaya hai.");
+            fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+            .then(response => {
+                alert("Booking Request Sent! Hum jald hi aapse WhatsApp par contact karenge.");
                 location.reload();
-            }
+            })
+            .catch(error => {
+                alert("Booking saved locally. Hum connect karenge!");
+                location.reload();
+            });
         }
 
+        // ADMIN LOGIN
         function adminLogin() { 
             if(prompt("Enter Admin Password:") === adminPass) { 
                 document.getElementById('adminBox').style.display='block'; 
                 renderAdmin(); 
-            } else {
-                alert("Incorrect Password!");
-            }
+                renderGalleryAdmin();
+            } else { alert("Incorrect Password!"); }
         }
 
-        function changePassword() {
-            let newP = document.getElementById('newPass').value;
-            if(newP.length < 4) return alert("Password must be at least 4 characters!");
-            adminPass = newP;
-            localStorage.setItem('csd_pass_vidfix', adminPass);
-            alert("Password updated successfully!");
-            document.getElementById('newPass').value = "";
-        }
-
-        function toggleApprove(id) {
-            let item = db.find(x => x.id === id);
-            item.approved = !item.approved;
-            localStorage.setItem('csd_db_vidfix_v3', JSON.stringify(db));
-            renderAdmin(); renderTracker();
-        }
-
-        function genBill(id) {
-            const item = db.find(x => x.id === id);
-            const win = window.open('', '_blank');
-            win.document.write(`<html><body style="padding:50px; border:10px solid #D4AF37; font-family:sans-serif;"><h1>CSD STUDIO BILL</h1><hr><p>Name: ${item.name}</p><p>Phone: ${item.phone}</p><p>Service: ${item.service}</p><p>Date: ${item.date}</p><script>window.print();<\/script></body></html>`);
-        }
-
+        // ADD WORK TO PORTFOLIO
         function addWork() {
             let link = document.getElementById('workLink').value;
             let type = document.getElementById('workType').value;
+            let cat = document.getElementById('workCategory').value;
             if(!link) return;
             
-            let match = link.match(/[-\w]{25,}/); 
             let finalUrl = link; 
-
-            if(match && link.includes('drive.google.com')) { 
+            let match = link.match(/[-\w]{25,}/); 
+            if(link.includes('drive.google.com') && match) { 
                 let driveId = match[0];
-                if(type === 'image') {
-                    finalUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
-                } else {
-                    finalUrl = `https://drive.google.com/file/d/${driveId}/preview`;
-                }
-            }
+                if(type === 'image') finalUrl = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+                else finalUrl = `https://drive.google.com/file/d/${driveId}/preview`;
+            } 
 
-            gallery.push({ id: Date.now(), url: finalUrl, type: type });
-            localStorage.setItem('csd_gal_vidfix_v3', JSON.stringify(gallery));
-            renderAdmin(); renderGallery();
+            gallery.push({ id: Date.now(), url: finalUrl, type: type, category: cat });
+            localStorage.setItem('csd_gal_final_v6', JSON.stringify(gallery));
+            renderGalleryAdmin(); 
+            filterWork('All');
             document.getElementById('workLink').value = '';
-            alert("Upload Complete!");
+            alert("Media Uploaded Successfully!");
         }
 
+        // TOGGLE TRACKER APPROVAL (BUG FIXED HERE: USING == INSTEAD OF ===)
+        function toggleApprove(id) {
+            let item = db.find(x => x.id == id);
+            if (item) {
+                item.approved = !item.approved;
+                localStorage.setItem('csd_db_final_v6', JSON.stringify(db));
+                renderAdmin(); 
+                renderTracker();
+            }
+        }
+
+        // RENDER ADMIN CLIENT TABLE
         function renderAdmin() {
             document.getElementById('adminTableBody').innerHTML = db.map(i => `
                 <tr>
-                    <td>${i.name}</td>
-                    <td>${i.phone}</td>
-                    <td style="color:var(--yellow)">${i.service}</td>
-                    <td>${i.date}</td>
-                    <td><button class="admin-btn" style="background:${i.approved?'green':'#666'}; color:white;" onclick="toggleApprove(${i.id})">${i.approved?'Accept':'Reject'}</button></td>
-                    <td><button class="admin-btn" style="background:orange; color:black;" onclick="genBill(${i.id})">Bill</button></td>
-                    <td><button onclick="delB(${i.id})" style="color:red; background:none; border:none; font-weight:bold; font-size:1.2rem; cursor:pointer;">X</button></td>
+                    <td style="color:var(--white);">${i.name}</td>
+                    <td style="color:var(--white);">${i.phone}</td>
+                    <td style="color:var(--gold)">${i.service}</td>
+                    <td style="color:var(--white);">${i.date}</td>
+                    <td><button style="background:${i.approved?'green':'#555'}; color:white; border:none; padding:5px 10px; border-radius:3px; cursor:pointer;" onclick="toggleApprove(${i.id})">${i.approved?'Approved':'Pending'}</button></td>
+                    <td><a href="https://wa.me/91${i.phone}" target="_blank" style="background:#25d366; color:#000; padding:5px 10px; text-decoration:none; border-radius:3px; font-weight:bold;">WhatsApp</a></td>
+                    <td><button class="del-btn" onclick="delB(${i.id})">X</button></td>
                 </tr>`).join('');
         }
 
-        function delB(id) { db = db.filter(x => x.id !== id); localStorage.setItem('csd_db_vidfix_v3', JSON.stringify(db)); renderAdmin(); renderTracker(); }
-
-        function renderGallery() {
-            document.getElementById('publicGallery').innerHTML = gallery.map(g => {
-                if(g.type === 'image') {
-                    return `<div class="work-item"><img src="${g.url}" referrerpolicy="no-referrer" alt="Portfolio Image"></div>`;
-                } else {
-                    return `<div class="work-item"><iframe src="${g.url}" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen="true" frameborder="0"></iframe></div>`;
-                }
-            }).join('');
+        // DELETE BOOKING (BUG FIXED HERE: USING != INSTEAD OF !==)
+        function delB(id) { 
+            db = db.filter(x => x.id != id); 
+            localStorage.setItem('csd_db_final_v6', JSON.stringify(db)); 
+            renderAdmin(); 
+            renderTracker(); 
         }
 
+        // RENDER ADMIN GALLERY (DELETE)
+        function renderGalleryAdmin() {
+            document.getElementById('adminGalleryBody').innerHTML = gallery.map(g => `
+                <tr>
+                    <td style="color:var(--white); text-transform:uppercase;">${g.type}</td>
+                    <td style="color:var(--gold);">${g.category}</td>
+                    <td><a href="${g.url}" target="_blank" style="color:#aaa; font-size:0.8rem;">View Link</a></td>
+                    <td><button class="del-btn" onclick="delGallery(${g.id})">Delete</button></td>
+                </tr>`).join('') || '<tr><td colspan="4" style="color:#666;">No media uploaded yet.</td></tr>';
+        }
+        
+        // DELETE MEDIA (BUG FIXED HERE: USING != INSTEAD OF !==)
+        function delGallery(id) { 
+            if(confirm("Are you sure you want to delete this media?")) {
+                gallery = gallery.filter(g => g.id != id); 
+                localStorage.setItem('csd_gal_final_v6', JSON.stringify(gallery)); 
+                renderGalleryAdmin(); 
+                filterWork('All'); 
+            }
+        }
+
+        // FILTER PORTFOLIO
+        function filterWork(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event && event.target ? event.target.classList.add('active') : document.querySelector('.filter-btn').classList.add('active');
+
+            let filtered = cat === 'All' ? gallery : gallery.filter(g => g.category === cat);
+            document.getElementById('publicGallery').innerHTML = filtered.map(g => {
+                if(g.type === 'image') return `<div class="work-item"><img src="${g.url}" referrerpolicy="no-referrer"></div>`;
+                else return `<div class="work-item"><iframe src="${g.url}" allowfullscreen="true" frameborder="0"></iframe></div>`;
+            }).join('') || '<p style="color:#666; text-align:center; width:100%;">No media in this category yet.</p>';
+        }
+
+        // RENDER LIVE TRACKER
         function renderTracker() {
             const tracker = document.getElementById('publicTracker');
-            const bookedDates = db.filter(i => i.approved).map(i => `<span class="booked-tag">📅 Booked: ${i.date}</span>`).join('');
-            tracker.innerHTML = bookedDates || `<p style="opacity:0.5;">No dates booked yet.</p>`;
+            const bookedDates = db.filter(i => i.approved).map(i => `<span class="booked-tag">📅 ${i.date}</span>`).join('');
+            tracker.innerHTML = bookedDates || `<p style="opacity:0.7; color: #ccc;">Abhi saari dates open hain. Jaldi book karein!</p>`;
         }
 
-        const canvas = document.getElementById('waterCanvas'); const ctx = canvas.getContext('2d');
-        let particles = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.onresize = resize; resize();
-        window.addEventListener('mousemove', e => { if(particles.length < 30) particles.push({x:e.x, y:e.y, s:Math.random()*6, a:1, vx:Math.random()*2-1, vy:Math.random()*2-1}); });
-        function animate() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            particles.forEach((p,i) => { p.x += p.vx; p.y += p.vy; p.a -= 0.02; ctx.fillStyle = `rgba(212, 175, 55, ${p.a})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); if(p.a <= 0) particles.splice(i,1); });
-            requestAnimationFrame(animate);
-        }
-        animate(); renderGallery(); renderTracker();
+        // INIT
+        filterWork('All');
+        renderTracker();
     </script>
 </body>
 </html>
